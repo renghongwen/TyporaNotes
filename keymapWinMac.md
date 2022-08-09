@@ -2,7 +2,7 @@
 
 ## Mac 键盘符号说明
 
-- `⌘` == `Command`
+- `⌘` == `Command`11
 - `⇧` == `Shift`
 - `⇪` == `Caps Lock`
 - `⌥` == `Option`

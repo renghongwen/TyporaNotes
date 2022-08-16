@@ -442,7 +442,7 @@ SpringMVC路径中的占位符常用于RESTful风格中，当请求路径中将�
 <a th:href="@{/testRest/1/admin}">测试路径中的占位符-->/testRest</a><br>
 ```
 
-```java
+```
 @RequestMapping("/testRest/{id}/{username}")
 public String testRest(@PathVariable("id") String id, @PathVariable("username") String username){
     System.out.println("id:"+id+",username:"+username);
@@ -450,6 +450,9 @@ public String testRest(@PathVariable("id") String id, @PathVariable("username") 
 }
 //最终输出的内容为-->id:1,username:admin
 ```
+
+
+
 
 # 四、SpringMVC获取请求参数
 

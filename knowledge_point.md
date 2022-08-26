@@ -39,4 +39,21 @@ Json序列化和实现Serializable接口序列化的区别:
 2. 避免过多的类型强转
 3. 泛型只是保证类型安全，在运行期间还是会擦除
 
-### 4. 
+### 4. SecureRandom.getInstanceStrong的nextInt方法在Linux机器上可能会存在阻塞
+
+产生原因:
+
+> private Random rand = SecureRandom.getInstanceStrong()；
+>
+> rand.nextDouble() 和rand.nextInt()等同类方法在Linux机器上获取时会读取操作系统的/dev/random文件来生成随机数。
+>
+> 如果你们的机器上没有该文件或系统产生的扰动很小时，就会产生线程阻塞。
+>
+> 这个文件的数据来源于系统的扰动，比如键盘的输入、鼠标点击等等操作。当系统产生扰动很少的时候，就会导致读取这个文件的线程阻塞（和采用的代码语言无关）。操作系统产生的这个扰动可以通过 cat /proc/sys/kernel/random/entropy_avail 查看（即系统熵值）。
+
+解决方案:
+
+- 采用 new SecureRandom() 实例化，这个实例化底层是读取的是操作系统的 /dev/urandom文件，这个是伪随机，相比 SecureRandom.getInstanceStrong() 方式，它的随机性稍微弱一些，但大多数场景够用了。
+- 仍然采用 SecureRandom.getInstanceStrong() 方式，这种方式适合对随机性要求高的场景。采用这种方式为了避免阻塞问题，就需要系统产生足够的扰动。于是可以安装 haveged 并启动 haveged，启动haveged后可以发现 cat /proc/sys/kernel/random/entropy_avail 返回的值变大了，所以不再阻塞。也可以安装rng-tools这个来达到这个目的
+  
+

@@ -204,43 +204,35 @@ SQL99新特性 - USING
 
 **数值函数**
 
-![image-20220829145309656](E:\TyporaNotes\MySQL\图片\image-20220829145309656.png)
+![ ](E:\TyporaNotes\MySQL\图片\image-20220829145309656.png)
 
+角度与弧度互换函数
 
+![image-20220829203201788](E:\TyporaNotes\MySQL\图片\image-20220829203201788.png)
 
+三角函数
 
+![image-20220829203228207](E:\TyporaNotes\MySQL\图片\image-20220829203228207.png)
 
+指数与对数
 
+![image-20220829205305565](E:\TyporaNotes\MySQL\图片\image-20220829205305565.png)
 
+进制之间的转换
 
+![image-20220829205810332](E:\TyporaNotes\MySQL\图片\image-20220829205810332.png)
 
+**字符串函数**
 
+![image-20220829221516599](E:\TyporaNotes\MySQL\图片\image-20220829221516599.png)
 
+> 字符串的索引是从1开始的
 
+![image-20220829225640401](E:\TyporaNotes\MySQL\图片\image-20220829225640401.png)
 
+![image-20220829230719361](E:\TyporaNotes\MySQL\图片\image-20220829230719361.png)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+**日期和时间类型函数**
 
 
 

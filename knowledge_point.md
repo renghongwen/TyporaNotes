@@ -53,7 +53,8 @@ Json序列化和实现Serializable接口序列化的区别:
 
 解决方案:
 
-- 采用 new SecureRandom() 实例化，这个实例化底层是读取的是操作系统的 /dev/urandom文件，这个是伪随机，相比 SecureRandom.getInstanceStrong() 方式，它的随机性稍微弱一些，但大多数场景够用了。
+- 采用 new SecureRandom() 实例化，这个实例化底层是读取的是操作系统的 /dev/urandom文件，这个是伪随机，相比 SecureRandom.getInstanceStrong() 方式，它的随机性稍微弱一些，但大多数场景够用了。 (实现起来比较好的方式)
 - 仍然采用 SecureRandom.getInstanceStrong() 方式，这种方式适合对随机性要求高的场景。采用这种方式为了避免阻塞问题，就需要系统产生足够的扰动。于是可以安装 haveged 并启动 haveged，启动haveged后可以发现 cat /proc/sys/kernel/random/entropy_avail 返回的值变大了，所以不再阻塞。也可以安装rng-tools这个来达到这个目的
   
 
+- 直接使用静态成员变量private static Random random  = new Random；(比较不好的方式)

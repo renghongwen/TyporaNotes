@@ -234,11 +234,59 @@ SQL99新特性 - USING
 
 **日期和时间类型函数**
 
+获取日期，时间
+
+![image-20220830103619246](E:\TyporaNotes\MySQL\图片\image-20220830103619246.png)
+
+日期与时间戳的转换
+
+![image-20220830103638761](E:\TyporaNotes\MySQL\图片\image-20220830103638761.png)
+
+获取月份，星期，星期数，天数等函数
+
+ ![image-20220830103806676](E:\TyporaNotes\MySQL\图片\image-20220830103806676.png)
+
+日期的操作函数
+
+![image-20220830103827685](E:\TyporaNotes\MySQL\图片\image-20220830103827685.png)
+
+![image-20220830103845868](C:\Users\HP\AppData\Roaming\Typora\typora-user-images\image-20220830103845868.png)
+
+![image-20220830111234397](E:\TyporaNotes\MySQL\图片\image-20220830111234397.png)
+
+时间和秒钟的转换函数
+
+![image-20220830103909776](E:\TyporaNotes\MySQL\图片\image-20220830103909776.png)
+
+计算日期和时间的函数
+
+![3](E:\TyporaNotes\MySQL\图片\image-20220830103942630.png)
+
+![image-20220830104003642](E:\TyporaNotes\MySQL\图片\image-20220830104003642.png)
+
+日期的格式化与解析函数
+
+![image-20220830104107342](E:\TyporaNotes\MySQL\图片\image-20220830104107342.png)
+
+![image-20220830151812774](E:\TyporaNotes\MySQL\图片\image-20220830151812774.png)
+
+![image-20220830152405796](E:\TyporaNotes\MySQL\图片\image-20220830152405796.png)
+
+![image-20220830153142384](E:\TyporaNotes\MySQL\图片\image-20220830153142384.png)
+
+![image-20220830153457698](E:\TyporaNotes\MySQL\图片\image-20220830153457698.png)
+
+**流程控制函数**
+
+![image-20220830154131640](E:\TyporaNotes\MySQL\图片\image-20220830154131640.png)
+
+**加密与解密函数**
+
+![image-20220830162423748](E:\TyporaNotes\MySQL\图片\image-20220830162423748.png)
 
 
 
 
- 
 
 
 
@@ -255,18 +303,6 @@ SQL99新特性 - USING
 
 
 
-
-
-
-
-
-
-
-
-
-
-
- 
 
 
 

@@ -39,7 +39,7 @@ NoSQL使用场景：日志收集，排行榜，定时器等。
 
 查看编码命令:
 
-> show variables like 'cjaracter_%';
+> show variables like 'character_%';
 >
 > show variables like 'collation_%';
 
@@ -200,29 +200,27 @@ SQL99新特性 - USING
 
 ##### 1)单行函数
 
-
-
-**数值函数**
+###### 1.数值函数
 
 ![ ](E:\TyporaNotes\MySQL\图片\image-20220829145309656.png)
 
-角度与弧度互换函数
+###### 2.角度与弧度互换函数
 
 ![image-20220829203201788](E:\TyporaNotes\MySQL\图片\image-20220829203201788.png)
 
-三角函数
+###### 3.三角函数
 
 ![image-20220829203228207](E:\TyporaNotes\MySQL\图片\image-20220829203228207.png)
 
-指数与对数
+###### 4,指数与对数
 
 ![image-20220829205305565](E:\TyporaNotes\MySQL\图片\image-20220829205305565.png)
 
-进制之间的转换
+###### 5.进制之间的转换函数
 
 ![image-20220829205810332](E:\TyporaNotes\MySQL\图片\image-20220829205810332.png)
 
-**字符串函数**
+###### 6.字符串函数
 
 ![image-20220829221516599](E:\TyporaNotes\MySQL\图片\image-20220829221516599.png)
 
@@ -232,21 +230,19 @@ SQL99新特性 - USING
 
 ![image-20220829230719361](E:\TyporaNotes\MySQL\图片\image-20220829230719361.png)
 
-**日期和时间类型函数**
-
-获取日期，时间
+###### 7.获取日期，时间函数
 
 ![image-20220830103619246](E:\TyporaNotes\MySQL\图片\image-20220830103619246.png)
 
-日期与时间戳的转换
+###### 8.日期与时间戳的转换函数
 
 ![image-20220830103638761](E:\TyporaNotes\MySQL\图片\image-20220830103638761.png)
 
-获取月份，星期，星期数，天数等函数
+###### 9.获取月份，星期，星期数，天数等函数
 
  ![image-20220830103806676](E:\TyporaNotes\MySQL\图片\image-20220830103806676.png)
 
-日期的操作函数
+###### 日期的操作函数
 
 ![image-20220830103827685](E:\TyporaNotes\MySQL\图片\image-20220830103827685.png)
 
@@ -254,17 +250,17 @@ SQL99新特性 - USING
 
 ![image-20220830111234397](E:\TyporaNotes\MySQL\图片\image-20220830111234397.png)
 
-时间和秒钟的转换函数
+###### 10.时间和秒钟的转换函数
 
 ![image-20220830103909776](E:\TyporaNotes\MySQL\图片\image-20220830103909776.png)
 
-计算日期和时间的函数
+###### 11.计算日期和时间的函数
 
 ![3](E:\TyporaNotes\MySQL\图片\image-20220830103942630.png)
 
 ![image-20220830104003642](E:\TyporaNotes\MySQL\图片\image-20220830104003642.png)
 
-日期的格式化与解析函数
+###### 12.日期的格式化与解析函数
 
 ![image-20220830104107342](E:\TyporaNotes\MySQL\图片\image-20220830104107342.png)
 
@@ -276,13 +272,59 @@ SQL99新特性 - USING
 
 ![image-20220830153457698](E:\TyporaNotes\MySQL\图片\image-20220830153457698.png)
 
-**流程控制函数**
+###### 13.流程控制函数
 
 ![image-20220830154131640](E:\TyporaNotes\MySQL\图片\image-20220830154131640.png)
 
-**加密与解密函数**
+###### 14.加密与解密函数
 
 ![image-20220830162423748](E:\TyporaNotes\MySQL\图片\image-20220830162423748.png)
+
+> 在MySQL8.0以上版本，对PASSWORD(str)，ENCODE(value,password_seed),ENCODE(value,password_seed)三个函数均已弃用。
+
+###### 15.MySQL信息函数
+
+![image-20220831135839161](E:\TyporaNotes\MySQL\图片\image-20220831135839161.png)
+
+###### 16.其他函数
+
+![image-20220831140325941](E:\TyporaNotes\MySQL\图片\image-20220831140325941.png)
+
+与ROUND(x,y)函数不同，FORMAT(value,n)函数中如果n的值小于或者等于0，则只保留整数部分。
+
+ ##### 2) 聚合函数
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -294,6 +294,113 @@ SQL99新特性 - USING
 
  ##### 2) 聚合函数
 
+###### 1.常见的聚合函数:
+
+- AVG：只使用于数值类型的字段
+- SUM：只使用于数值类型的字段
+- MAX
+- MIN
+- COUNT：计算指定字段在查询结果中出现的个数（**计算指定字段出现的个数时，是不计算NULL值的**）
+
+以上函数在计算时都不计算NULL值                               AVG = SUM / COUNT
+
+
+
+> 统计表中的记录数，使用count(*),count(1),count(具体字段)哪个效率比较高?	
+
+​	如果使用的是InnoDB存储引擎，则三者效率为count(*)  = count(1) > count(字段)
+
+
+
+###### 2.group by的使用
+
+- 在使用过程中，需要注意，SELECT中出现的非组函数的字段必须声明在group by中。反之，group by中声明的子弹可以不出现在SELECT中。
+- SELECT ... FROM ... WHERE ... GROUP BY ... ORDER BY ... LIMIT ...
+- MySQL中GROUP BY 中使用WITH ROLLUP  即 GROUP BY ... WITH  ROLLUP
+- 当使用ROLLUP时，不能同时使用ORDER BY子句进行结果排序，即ROLLUP和ORDER BY是相互排斥的。
+
+###### 3.having的使用
+
+> 若果过滤条件中使用了聚合函数，则必须使用HAVING来替换WHERE。
+>
+>  即开发中，使用HAVING的前提是SQL中使用了GROUP  BY。
+
+​	当过滤条件中有聚合函数时，则此过滤条件必须声明在HAVING中。
+
+当过滤条件中没有聚合函数时，则此过滤条件声明在WHERE中或HAVING中都可以。但是，建议声明在WHERE中。
+
+
+
+**WHERE和HAVING的比较:**
+
+1. 从适用范围上来说，HAVING使用范围更广。
+
+   - WHERE可以直接使用表中的字段作为筛选条件，但不能使用分组中的计算函数作为筛选条件；HAVING必须要与GROUP BY配合使用，可以把分组计算的函数和分组字段作为筛选条件。
+
+2. 如果过滤条件中没有聚合函数，这种情况下，WHERE的执行效率要高于HAVING
+
+   - 如果需要通过连接从关联表中获取需要的数据，WHERE是先筛选后连接，而HAVING是先连接后筛选。
+
+   
+
+###### 4. SQL底层执行原理
+
+SELECT语句的执行顺序：
+
+> FROM <left_table>
+>
+> ON <join_condition>
+>
+> <join_type> JOIN <right_table>
+>
+> WHERE <where_condition>
+>
+> GROUP BY <group_by_list>
+>
+> HAVING <having_condition>
+>
+> SELECT
+>
+> DISTINCT <select_list>
+>
+> ORDER BY <order_by_condition>
+>
+> LIMIT <limit_number>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

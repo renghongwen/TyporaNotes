@@ -56,5 +56,37 @@ Json序列化和实现Serializable接口序列化的区别:
 - 采用 new SecureRandom() 实例化，这个实例化底层是读取的是操作系统的 /dev/urandom文件，这个是伪随机，相比 SecureRandom.getInstanceStrong() 方式，它的随机性稍微弱一些，但大多数场景够用了。 (实现起来比较好的方式)
 - 仍然采用 SecureRandom.getInstanceStrong() 方式，这种方式适合对随机性要求高的场景。采用这种方式为了避免阻塞问题，就需要系统产生足够的扰动。于是可以安装 haveged 并启动 haveged，启动haveged后可以发现 cat /proc/sys/kernel/random/entropy_avail 返回的值变大了，所以不再阻塞。也可以安装rng-tools这个来达到这个目的
   
-
 - 直接使用静态成员变量private static Random random  = new Random；(比较不好的方式)
+
+### 5. 关于BigDecimal的一些使用建议
+
+**初始化的两种方式:**
+
+- 在使用BigDecimal构造函数时，尽量传递字符串，而不传递浮点类型
+- 采用BigDecimal.valueOf方法来构造初始化值
+
+**equals方法和compareTo方法**
+
+- equals方法不仅比较了值是否相等，还比较了精度是否相同
+- compareTo方法实现了Comparable接口，真正比较的是值的大小
+
+通常情况下，如果比较的是连个BigDecimal值的大小，采用其实现的compareTo方法，如果严格限制精度的比较，那么则使用equals方法。
+
+>  在使用BigDecimal进行运算时，一定要明确指明精度和舍入模式。
+
+> 根据数据结果展示格式不同，采用不同的字符串输出方式，通常使用比较多的方法是toPlainString()
+>
+> toString()方法在必要时会输出科学计数法
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -115,6 +115,7 @@ SQL分类:
 > _ ： 代表一个不确定的字符
 
 4. OR可以和AND一起使用，并且AND的优先级高于OR。
+5. <>符号表示不等于
 
 
 
@@ -461,6 +462,17 @@ from departments d, (
 		limit 0,1
 ) department_avg_salary
 where d.department_id  = department_avg_salary.department_id;
+
+-- 各个部门中，最高工资中最低的那个部门的 最低工资是多少?
+select min(salary) 
+from employees emp,(
+			select e.department_id,max(salary) 
+			from employees e  
+			group by e.department_id    
+			order by max(salary) asc
+			limit 0,1
+) department_max_salary_min
+where emp.department_id = department_max_salary_min.department_id;
 
 ```
 

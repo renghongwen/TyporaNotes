@@ -302,9 +302,9 @@ SQL99新特性 - USING
 - MIN
 - COUNT：计算指定字段在查询结果中出现的个数（**计算指定字段出现的个数时，是不计算NULL值的**）
 
-以上函数在计算时都不计算NULL值                               AVG = SUM / COUNT
+**以上函数在计算时都不计算NULL值 **                              AVG = SUM / COUNT
 
-
+MySQL中聚合函数是不能嵌套使用的
 
 > 统计表中的记录数，使用count(*),count(1),count(具体字段)哪个效率比较高?	
 
@@ -369,13 +369,232 @@ SELECT语句的执行顺序：
 
 
 
+#### 2.6 子查询
+
+编写注意事项:
+
+- 子查询要包含在括号内
+- 将子查询放在比较条件的右侧
+- 单行操作符对应单行子查询，多行操作符对应多行子查询
+
+**子查询的分类：**
+
+1. 角度一：从内查询返回的结果的条目数方面看
+   - 单行子查询   |  多行子查询
+2. 角度二：内查询是否被执行多次
+   -  相关子查询  |  不相关子查询
+
+关联子查询：如果子查询的执行依赖于外部查询，通常情况下都是因为子查询中的表用到了外部的表，并进行了条件关联，因此每执行一次外部查询，子查询都要重新计算一次。 
 
 
 
+相关子查询的执行流程：
+
+![image-20220903092345312](E:\TyporaNotes\MySQL\图片\image-20220903092345312.png)
+
+##### 多行比较操作符
+
+| 操作符 | 含义                                                     |
+| ------ | -------------------------------------------------------- |
+| IN     | 等于列表中的**任意一个**                                 |
+| ANY    | 需要和单行比较符一起使用，和子查询返回的**某一个值**比较 |
+| ALL    | 需要和单行比较符一起使用，和子查询返回的**所有值**比较   |
+| SOME   | 实际上是ANY的别名，作用相同，一般常使用ANY               |
+
+> 在SELECT中，除了group by 和 limit 之外，其他位置都可以声明子查询
 
 
 
+##### EXISTS 和 NOT EXISTS关键字
 
+使用场景：关联子查询通常也会和EXISTS操作符一起来使用，用来检查在子查询中是否存在满足条件的行。
+
+```sql
+-- 查询departments表中，不存在于employees表中的部门的department_id和department_name
+select d.department_id,d.department_name
+from departments d 
+where not exists (select * 
+				 from employees e
+				 where d.department_id = e.department_id);
+
+```
+
+通常情况下，能够使用IN的多行子查询都可以使用EXISTS关键字来完成
+
+
+
+一个场景下既可以使用自连接完成，也可以使用子查询完成，那该使用哪种方式?
+
+> 一般建议使用自连接，因为在许多DBMS的处理过程中，对于自连接的处理速度比子查询快得多。
+>
+> 子查询实际上是通过未知表进行查询后的条件判断，而自连接是通过已知的自身数据表进行条件判断，因此在大部分DBMS中都对自连接处理进行了优化。
+
+
+
+练习题：
+
+```sql
+-- 查询平均工资最低的部门信息
+select * 
+from departments d 
+where department_id  = (
+	select department_id 
+	from employees e2 
+	group by department_id 
+	having  avg(salary) = (
+						select min(avg_salary)  
+						from (
+								select department_id,avg(salary) "avg_salary"
+								from employees e 
+								group by department_id
+						) t_department_avg_salary
+	)
+);
+
+-- 查询平均工资最低的部门信息和该部门的平均工资
+select d.*,department_avg_salary.avg_salary
+from departments d, (
+		select department_id,avg(salary) "avg_salary"
+		from employees e  
+		group by department_id
+		order by avg_salary asc 
+		limit 0,1
+) department_avg_salary
+where d.department_id  = department_avg_salary.department_id;
+
+```
+
+
+
+#### 2.7 创建表和管理表
+
+##### 2.7.1 创建数据库
+
+创建数据库并指定字符集
+
+``` sql
+ create database 数据库名 character set 字符集;
+```
+
+判断数据库是否已经存在，不存在则创建数据库
+
+```sql
+create database if not exists 数据库名;
+```
+
+##### 2.7.2 管理数据库
+
+查看当前使用的数据库
+
+```sql 
+select database() from dual;
+```
+
+查看指定数据库下保存的数据表
+
+```sql
+show tables from 数据库名;
+```
+
+##### 2.7.3 修改数据库(一般不会使用)
+
+修改数据库字符集
+
+```sql
+alter database 数据库名 character set 字符集;
+```
+
+##### 2.7.4 删除数据库
+
+```sql
+drop database 数据库名;
+drop dabase if exists 数据库名;
+```
+
+慎用删除操作！！！
+
+删除操作默认是不能回滚的
+
+##### 2.7.5 MySQL中的数据类型
+
+| 类型             | 类型举例                                                     |
+| ---------------- | ------------------------------------------------------------ |
+| 整数类型         | TINYINT，SMALLINT，MEDIUMINT，INT（或INTEGER），BIGINT       |
+| 浮点类型         | FLOAT,DOUBLE                                                 |
+| 定点数类型       | DECIMAL                                                      |
+| 位类型           | BIT                                                          |
+| 日期时间类型     | YEAR，TIME，DATE，DATETIME，TIMESTAMP                        |
+| 文本字符串类型   | CHAR，VARCHAR，TINYTEXT，TEXT,MEDIUMTEXT，LONGTEXT           |
+| 枚举类型         | ENUM                                                         |
+| 集合类型         | SET                                                          |
+| 二进制字符串类型 | BINARY，VARBINARY，TINYBLOB，BLOB，MEDIUMBLOB，LONGBLOB      |
+| JSON类型         | JSON对象，JSON数组                                           |
+| 空间数据类型     | 单值：GEOMETRY，POINT，LINESTRING，POLYGON                   |
+|                  | 集合：MULTIPOINT，MULTINESTRING，MULTIPOLYGON，GEOMETRYCOLLECTION |
+
+![](E:\TyporaNotes\MySQL\图片\微信图片_20220906092451.png)
+
+##### 2.7.6 表的相关操作
+
+基于现有的表创建表(同时还可以导入数据)
+
+```sql
+create table 表名 as select 字段1,字段2 .... from 现有表的表名
+```
+
+补充：查询语句中字段的别名，可以作为新创建的表的字段的名称
+
+添加一个字段
+
+```sql
+alter table 表名  add  字段名  字段类型 [ first | after 字段名 ] ;
+```
+
+修改一个字段（数据类型，长度，默认值）
+
+```sql
+alter table 表名 modify  字段名 字段类型(长度)  default  默认值;
+```
+
+重命名一个字段(可以同时对字段长度进行修改)
+
+```sql
+alter table 表名 change 原字段名 新字段名 字段类型(长度);
+```
+
+删除一个字段
+
+```sql
+alter table 表名 drop column 字段名;
+```
+
+重命名表
+
+```sql
+方式一:
+
+	rename table 原表名 to 新表名;
+
+方式二:
+
+	alter table 原表名 to 新表名;
+```
+
+删除表(将表结构和表中数据删除，释放表空间)
+
+```sql
+drop table [ if exists ] 表名;	
+```
+
+清空表(清空表中的所有数据，但表结构保留)
+
+```sql
+truncate table 表名;
+```
+
+
+
+ 
 
 
 

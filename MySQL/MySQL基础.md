@@ -715,3 +715,5 @@ truncate table 表名;
 
 
 
+
+

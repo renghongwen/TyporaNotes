@@ -466,9 +466,11 @@ where d.department_id  = department_avg_salary.department_id;
 
 
 
-#### 2.7 创建表和管理表
+### 三. DDL
 
-##### 2.7.1 创建数据库
+#### 3.1管理 数据库
+
+##### 3.1.1 创建数据库
 
 创建数据库并指定字符集
 
@@ -482,7 +484,7 @@ where d.department_id  = department_avg_salary.department_id;
 create database if not exists 数据库名;
 ```
 
-##### 2.7.2 管理数据库
+##### 3.1.2 管理数据库
 
 查看当前使用的数据库
 
@@ -496,7 +498,7 @@ select database() from dual;
 show tables from 数据库名;
 ```
 
-##### 2.7.3 修改数据库(一般不会使用)
+##### 3.1.3 修改数据库(一般不会使用)
 
 修改数据库字符集
 
@@ -504,7 +506,7 @@ show tables from 数据库名;
 alter database 数据库名 character set 字符集;
 ```
 
-##### 2.7.4 删除数据库
+##### 3.1.4 删除数据库
 
 ```sql
 drop database 数据库名;
@@ -515,7 +517,7 @@ drop dabase if exists 数据库名;
 
 删除操作默认是不能回滚的
 
-##### 2.7.5 MySQL中的数据类型
+#### 3.2 MySQL中的数据类型
 
 | 类型             | 类型举例                                                     |
 | ---------------- | ------------------------------------------------------------ |
@@ -534,7 +536,7 @@ drop dabase if exists 数据库名;
 
 ![](E:\TyporaNotes\MySQL\图片\微信图片_20220906092451.png)
 
-##### 2.7.6 表的相关操作
+#### 3.3 表的相关操作
 
 基于现有的表创建表(同时还可以导入数据)
 
@@ -553,7 +555,7 @@ alter table 表名  add  字段名  字段类型 [ first | after 字段名 ] ;
 修改一个字段（数据类型，长度，默认值）
 
 ```sql
-alter table 表名 modify  字段名 字段类型(长度)  default  默认值;
+alter table 表名 modify  字段名 字段类型(长度)  [default  默认值];
 ```
 
 重命名一个字段(可以同时对字段长度进行修改)
@@ -577,7 +579,7 @@ alter table 表名 drop column 字段名;
 
 方式二:
 
-	alter table 原表名 to 新表名;
+	alter table 原表名  rename to 新表名;
 ```
 
 删除表(将表结构和表中数据删除，释放表空间)
@@ -592,25 +594,46 @@ drop table [ if exists ] 表名;
 truncate table 表名;
 ```
 
+ #### 3.4 DCL中的commit和rollback
+
+> 一旦执行commit操作，则数据就被永久保存到数据库当中，数据无法执行回滚操作。
+> 一旦执行rollback操作，可以实现数据的回滚，回滚到最近一次commiit位置
+
+ #### 3.5 truncate table 和 delete from 的区别
+
+相同点：都可以对表中的所有数据进行删除，同时保留表结构
+
+不同点：truncate table 删除表数据后，不可以进行回滚
+
+​				delete from 删除表数据后，可以进行回滚
+
+知识拓展:
+
+> DDL操作一旦操作，便不可以进行回滚(因为一定会执行一次commit操作，而此commit操作不受set autocommit = false的影响)
+>
+> DML操作一旦操作，可以进行回滚操作，默认情况下是不能进行回滚操作，只有在执行DML操作之前执行了 set autocommit = false 才能进行回滚
+
+#### 3.6 《阿里巴巴Java开发手册》sql部分
+
+- 【参考】truncate table 比delete 速度快，且使用的系统和事务日志资源少，但truncate 无事务且不触发 trigger，有可能造成事故，故不建议在开发代码中使用此语句。
+
+- 【参考】合适的字段存储长度，不但节约数据表空间，节约索引存储，更重要的时提升检索速度。
+
+  - 无符号值可以避免误存负数，且扩大了表示范围。
+
+  
+
+####  3.7 MySQL8.0中DDL的原子化
+
+> 在MySQL8.0版本中，InnoDB表的DDL支持事务完整性，即DDL操作要么成功要么回滚。DDL操作回滚日志写入data dictionary数据字典表mysql.innodb_ddl_log(该表示隐藏的表，通过show tables无法看到)中，用于回滚操作，通过设置参数，可将DDL操作日志打印到MySQL错误日志中。
+
+### 四.DML
+
+
+
 
 
  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

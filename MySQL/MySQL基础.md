@@ -108,7 +108,7 @@ SQL分类:
 2. 安全等于运算符（<=>）和等于运算符的作用是相似的，唯一的区别是 <=> 可以用来对NULL进行判断。在两个操作数均为NULL时，其返回值为1而不为NULL，当一个操作数为NULL时，其返回值为0，而不为NULL。
 3. 
 
-![image-20220823223824387](E:\TyporaNotes\MySQL\图片\image-20220823223824387.png)
+![image-20220823223824387](.\图片\image-20220823223824387.png)
 
 > %：代表零个或多个不确定的字符
 >
@@ -175,7 +175,7 @@ SQL 99语法实现外连接:
 
 注意：执行UNION ALL语句时所需要的资源比UNION语句少。如果明确知道合并数据后的结果数据不存在重复数据，或者不需要去除重复数据，则尽量使用UNION ALL语句，以提高数据查询的效率。
 
-![image-20220828094101829](E:\TyporaNotes\MySQL\图片\image-20220828094101829.png)
+![image-20220828094101829](.\图片\image-20220828094101829.png)
 
 SQL99新特性 - 自然连接
 
@@ -203,93 +203,93 @@ SQL99新特性 - USING
 
 ###### 1.数值函数
 
-![ ](E:\TyporaNotes\MySQL\图片\image-20220829145309656.png)
+![ ](.\图片\image-20220829145309656.png)
 
 ###### 2.角度与弧度互换函数
 
-![image-20220829203201788](E:\TyporaNotes\MySQL\图片\image-20220829203201788.png)
+![image-20220829203201788](.\图片\image-20220829203201788.png)
 
 ###### 3.三角函数
 
-![image-20220829203228207](E:\TyporaNotes\MySQL\图片\image-20220829203228207.png)
+![image-20220829203228207](.\图片\image-20220829203228207.png)
 
 ###### 4,指数与对数
 
-![image-20220829205305565](E:\TyporaNotes\MySQL\图片\image-20220829205305565.png)
+![image-20220829205305565](.\图片\image-20220829205305565.png)
 
 ###### 5.进制之间的转换函数
 
-![image-20220829205810332](E:\TyporaNotes\MySQL\图片\image-20220829205810332.png)
+![image-20220829205810332](.\图片\image-20220829205810332.png)
 
 ###### 6.字符串函数
 
-![image-20220829221516599](E:\TyporaNotes\MySQL\图片\image-20220829221516599.png)
+![image-20220829221516599](.\图片\image-20220829221516599.png)
 
 > 字符串的索引是从1开始的
 
-![image-20220829225640401](E:\TyporaNotes\MySQL\图片\image-20220829225640401.png)
+![image-20220829225640401](.\图片\image-20220829225640401.png)
 
-![image-20220829230719361](E:\TyporaNotes\MySQL\图片\image-20220829230719361.png)
+![image-20220829230719361](.\图片\image-20220829230719361.png)
 
 ###### 7.获取日期，时间函数
 
-![image-20220830103619246](E:\TyporaNotes\MySQL\图片\image-20220830103619246.png)
+![image-20220830103619246](.\图片\image-20220830103619246.png)
 
 ###### 8.日期与时间戳的转换函数
 
-![image-20220830103638761](E:\TyporaNotes\MySQL\图片\image-20220830103638761.png)
+![image-20220830103638761](.\图片\image-20220830103638761.png)
 
 ###### 9.获取月份，星期，星期数，天数等函数
 
- ![image-20220830103806676](E:\TyporaNotes\MySQL\图片\image-20220830103806676.png)
+ ![image-20220830103806676](.\图片\image-20220830103806676.png)
 
 ###### 日期的操作函数
 
-![image-20220830103827685](E:\TyporaNotes\MySQL\图片\image-20220830103827685.png)
+![image-20220830103827685](.\图片\image-20220830103827685.png)
 
-![image-20220830103845868](C:\Users\HP\AppData\Roaming\Typora\typora-user-images\image-20220830103845868.png)
+![image-20220830103845868](.\图片\image-20220830103845868.png)
 
-![image-20220830111234397](E:\TyporaNotes\MySQL\图片\image-20220830111234397.png)
+![image-20220830111234397](.\图片\image-20220830111234397.png)
 
 ###### 10.时间和秒钟的转换函数
 
-![image-20220830103909776](E:\TyporaNotes\MySQL\图片\image-20220830103909776.png)
+![image-20220830103909776](.\图片\image-20220830103909776.png)
 
 ###### 11.计算日期和时间的函数
 
-![3](E:\TyporaNotes\MySQL\图片\image-20220830103942630.png)
+![3](.\图片\image-20220830103942630.png)
 
-![image-20220830104003642](E:\TyporaNotes\MySQL\图片\image-20220830104003642.png)
+![image-20220830104003642](.\图片\image-20220830104003642.png)
 
 ###### 12.日期的格式化与解析函数
 
-![image-20220830104107342](E:\TyporaNotes\MySQL\图片\image-20220830104107342.png)
+![image-20220830104107342](.\图片\image-20220830104107342.png)
 
-![image-20220830151812774](E:\TyporaNotes\MySQL\图片\image-20220830151812774.png)
+![image-20220830151812774](.\图片\image-20220830151812774.png)
 
-![image-20220830152405796](E:\TyporaNotes\MySQL\图片\image-20220830152405796.png)
+![image-20220830152405796](.\图片\image-20220830152405796.png)
 
-![image-20220830153142384](E:\TyporaNotes\MySQL\图片\image-20220830153142384.png)
+![image-20220830153142384](.\图片\image-20220830153142384.png)
 
 ![image-20220830153457698](E:\TyporaNotes\MySQL\图片\image-20220830153457698.png)
 
 ###### 13.流程控制函数
 
-![image-20220830154131640](E:\TyporaNotes\MySQL\图片\image-20220830154131640.png)
+![image-20220830154131640](.\图片\image-20220830154131640.png)
 
 ###### 14.加密与解密函数
 
-![image-20220830162423748](E:\TyporaNotes\MySQL\图片\image-20220830162423748.png)
+![image-20220830162423748](.\图片\image-20220830162423748.png)
 
 > 在MySQL8.0以上版本，对PASSWORD(str)，ENCODE(value,password_seed),ENCODE(value,password_seed)三个函数均已弃用。
 
 ###### 15.MySQL信息函数
 
-![image-20220831135839161](E:\TyporaNotes\MySQL\图片\image-20220831135839161.png)
+![image-20220831135839161](.\图片\image-20220831135839161.png)
 
 ###### 16.其他函数
 
-![image-20220831140325941](E:\TyporaNotes\MySQL\图片\image-20220831140325941.png)
+![image-20220831140325941](.\图片\image-20220831140325941.png)
 
 与ROUND(x,y)函数不同，FORMAT(value,n)函数中如果n的值小于或者等于0，则只保留整数部分。
 
@@ -391,7 +391,7 @@ SELECT语句的执行顺序：
 
 相关子查询的执行流程：
 
-![image-20220903092345312](E:\TyporaNotes\MySQL\图片\image-20220903092345312.png)
+![image-20220903092345312](.\图片\image-20220903092345312.png)
 
 ##### 多行比较操作符
 
@@ -546,7 +546,7 @@ drop dabase if exists 数据库名;
 | 空间数据类型     | 单值：GEOMETRY，POINT，LINESTRING，POLYGON                   |
 |                  | 集合：MULTIPOINT，MULTINESTRING，MULTIPOLYGON，GEOMETRYCOLLECTION |
 
-![](E:\TyporaNotes\MySQL\图片\微信图片_20220906092451.png)
+![](.\图片\微信图片_20220906092451.png)
 
 #### 3.3 表的相关操作
 
@@ -640,6 +640,55 @@ truncate table 表名;
 > 在MySQL8.0版本中，InnoDB表的DDL支持事务完整性，即DDL操作要么成功要么回滚。DDL操作回滚日志写入data dictionary数据字典表mysql.innodb_ddl_log(该表示隐藏的表，通过show tables无法看到)中，用于回滚操作，通过设置参数，可将DDL操作日志打印到MySQL错误日志中。
 
 ### 四.DML
+
+#### 4.1 新增数据
+
+方式一：逐条添加数据
+
+```sql
+insert into 表名(字段名1,字段名2, ... ) values(字段值1,字段值2, ... ) 
+```
+
+一个同时插入多行记录的insert语句等同于多个单行插入的insert语句，但是多行的insert语句在处理过程中效率更高。
+
+方式二：将查询结果插入到表中
+
+```sql
+insert into 表名(字段名1,字段名2, ... )
+select 字段名1,字段名2, ... 
+from 表名
+where 条件
+```
+
+注意：查询的字段一定要与添加到的表的字段一一对应
+
+#### 4.2 更新数据
+
+```sql
+update 表名 set ... where ...
+```
+
+#### 4.3 删除数据
+
+```sql
+delete from 表名 where ...
+```
+
+#### 4.4 MySQL8.0新特性：计算列
+
+> 计算列：某一列的值是通过别栋列计算得来的。
+
+ 例：
+
+```sql
+create table 表名(
+字段1 类型,
+字段2 类型,
+字段3 generated always as (字段1 + 字段2) virtual  
+);
+```
+
+
 
 
 

@@ -690,6 +690,10 @@ create table 表名(
 
 
 
+### 五.MySQL数据类型
+
+
+
 
 
 

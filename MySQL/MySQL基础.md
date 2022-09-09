@@ -529,26 +529,7 @@ drop dabase if exists 数据库名;
 
 删除操作默认是不能回滚的
 
-#### 3.2 MySQL中的数据类型
-
-| 类型             | 类型举例                                                     |
-| ---------------- | ------------------------------------------------------------ |
-| 整数类型         | TINYINT，SMALLINT，MEDIUMINT，INT（或INTEGER），BIGINT       |
-| 浮点类型         | FLOAT,DOUBLE                                                 |
-| 定点数类型       | DECIMAL                                                      |
-| 位类型           | BIT                                                          |
-| 日期时间类型     | YEAR，TIME，DATE，DATETIME，TIMESTAMP                        |
-| 文本字符串类型   | CHAR，VARCHAR，TINYTEXT，TEXT,MEDIUMTEXT，LONGTEXT           |
-| 枚举类型         | ENUM                                                         |
-| 集合类型         | SET                                                          |
-| 二进制字符串类型 | BINARY，VARBINARY，TINYBLOB，BLOB，MEDIUMBLOB，LONGBLOB      |
-| JSON类型         | JSON对象，JSON数组                                           |
-| 空间数据类型     | 单值：GEOMETRY，POINT，LINESTRING，POLYGON                   |
-|                  | 集合：MULTIPOINT，MULTINESTRING，MULTIPOLYGON，GEOMETRYCOLLECTION |
-
-![](.\图片\微信图片_20220906092451.png)
-
-#### 3.3 表的相关操作
+#### 3.2 表的相关操作
 
 基于现有的表创建表(同时还可以导入数据)
 
@@ -606,12 +587,12 @@ drop table [ if exists ] 表名;
 truncate table 表名;
 ```
 
- #### 3.4 DCL中的commit和rollback
+ #### 3.3 DCL中的commit和rollback
 
 > 一旦执行commit操作，则数据就被永久保存到数据库当中，数据无法执行回滚操作。
 > 一旦执行rollback操作，可以实现数据的回滚，回滚到最近一次commiit位置
 
- #### 3.5 truncate table 和 delete from 的区别
+ #### 3.4 truncate table 和 delete from 的区别
 
 相同点：都可以对表中的所有数据进行删除，同时保留表结构
 
@@ -625,7 +606,7 @@ truncate table 表名;
 >
 > DML操作一旦操作，可以进行回滚操作，默认情况下是不能进行回滚操作，只有在执行DML操作之前执行了 set autocommit = false 才能进行回滚
 
-#### 3.6 《阿里巴巴Java开发手册》sql部分
+#### 3.5 《阿里巴巴Java开发手册》sql部分
 
 - 【参考】truncate table 比delete 速度快，且使用的系统和事务日志资源少，但truncate 无事务且不触发 trigger，有可能造成事故，故不建议在开发代码中使用此语句。
 
@@ -635,7 +616,7 @@ truncate table 表名;
 
   
 
-####  3.7 MySQL8.0中DDL的原子化
+####  3.6 MySQL8.0中DDL的原子化
 
 > 在MySQL8.0版本中，InnoDB表的DDL支持事务完整性，即DDL操作要么成功要么回滚。DDL操作回滚日志写入data dictionary数据字典表mysql.innodb_ddl_log(该表示隐藏的表，通过show tables无法看到)中，用于回滚操作，通过设置参数，可将DDL操作日志打印到MySQL错误日志中。
 
@@ -692,25 +673,111 @@ create table 表名(
 
 ### 五.MySQL数据类型
 
+| 类型             | 类型举例                                                     |
+| ---------------- | ------------------------------------------------------------ |
+| 整数类型         | TINYINT，SMALLINT，MEDIUMINT，INT（或INTEGER），BIGINT       |
+| 浮点类型         | FLOAT,DOUBLE                                                 |
+| 定点数类型       | DECIMAL                                                      |
+| 位类型           | BIT                                                          |
+| 日期时间类型     | YEAR，TIME，DATE，DATETIME，TIMESTAMP                        |
+| 文本字符串类型   | CHAR，VARCHAR，TINYTEXT，TEXT,MEDIUMTEXT，LONGTEXT           |
+| 枚举类型         | ENUM                                                         |
+| 集合类型         | SET                                                          |
+| 二进制字符串类型 | BINARY，VARBINARY，TINYBLOB，BLOB，MEDIUMBLOB，LONGBLOB      |
+| JSON类型         | JSON对象，JSON数组                                           |
+| 空间数据类型     | 单值：GEOMETRY，POINT，LINESTRING，POLYGON                   |
+|                  | 集合：MULTIPOINT，MULTINESTRING，MULTIPOLYGON，GEOMETRYCOLLECTION |
 
+![](.\图片\微信图片_20220906092451.png)
 
+常见数据类型的属性:
 
+![image-20220908144703310](.\图片\image-20220908144703310.png)
 
+#### 5.1 整数类型
 
+> 从MySQL8.0.17开始，整数数据类型不推荐使用显示宽度属性。
 
- 
+**可选属性：**
 
+- 宽度属性  例：int(10) 
+- unsigned   无符号整数
+- zerofill   需要配合宽度属性一起使用，当属性值长度小于属性宽度时，用0进行填充
 
+**使用场景：**
 
+- tinyint：一般用于枚举类型
 
+**使用建议**
 
+> 评估使用哪种数据类型时，需要考虑存储空间和可靠性的平衡问题，不过首先应该考虑可靠性问题，然后再考虑如何节省存储空间
 
+#### 5.2 浮点类型
 
+> MySQL存储浮点数的格式为：符号（S），尾数（M）和 阶码（E）。所以，不论有没有符号，MySQL的浮点数都会存储表示符号的部分。
 
+浮点类型，可以加unsigned,但是不会改变数据的范围
 
+浮点类型存在精度误差问题，对于精度要求比较高的数据，建议使用decimal类型进行存储
 
+#### 5.3 定点类型：decimal
 
+> decimal(M,D)的方式表示高精度小数,其中，M被称为精度，D被称为标度。
+>
+> decimal的最大取值范围和double类型一样，但是有效的数据范围是有M和D决定的。
+>
+> decimal的字节数是 M + 2 
 
+decimal在MySQL内部是以字符串的格式存储的。
+
+**浮点数 与 定点数**
+
+- 浮点数相对于定点数的优点是在长度一定的情况下，浮点类型取值范围大，但是不精准，**适用于需要取值范围大，又可以容忍微小误差的科学计算场景**
+- 定点数类型的取值范围相对小，但是精准，**适用于对精度要求极高的场景**，比如设计金额计算的场景
+
+#### 5.4 位类型：bit
+
+​	bit类型中存储的是二进制。
+
+#### 5.5 日期与时间类型
+
+##### 5.5.1 year类型
+
+year类型用来表示年份，只需要1个字节的存储空间
+
+- 4位字符串或数字格式表示year类型，其格式为YYYY
+- 2位格式的year不推荐使用
+
+##### 5.5.2 date类型
+
+date类型表示日期，没有时间部分，格式为YYYY-MM-DD,需要3个字节的存储空间
+
+##### 5.5.3 time类型
+
+time类型用来表示时间，不包含日期部分，格式为HH:MM:SS,需要3个字节的存储空间。
+
+#####  5.5.4 datetime类型
+
+ datetime类型在所有的日期时间类型中占用的存储空间最大，总共需要8个字节的存储空间，格式为YYYY-MM-DD HH:MM:SS 
+
+##### 5.5.5 timestamp类型
+
+timestamp类型也可以表示日期时间，格式也是YYYY-MM-DD HH:MM:SS ，但只需要4个字节的存储空间，只能存储" 1970-01-01 00:00:01UTC" 到 "2038-01-19 03:14:07 UTC"之间的时间，其中，UTC表示世界标准时间
+
+> 存储数据的时候需要对当前时间所在的时区进行转换，查询数据的时候再将时间转换回当前的时区。所以，使用timestamp存储的同一个时间值，在不同的时区查询时会显示不同的时间。
+
+##### 5.5.6 timestamp 和 datatime 的区别
+
+- Timestamp存储空间比较小，表示的日期时间范围也比较小
+- 底层存储方式不同，timestamp底层存储的是毫秒值，距离1970-1-1 0:0:0 毫秒的毫秒值
+- 两个日期比较大小或日期计算时，timestamp更方便，更快
+- timestamp和时区有关，timestamp会根据用户的时区不同，显示不同的结果。而datetime则只能反映出插入时当地的时区，其他时区的人查看数据必然会有误差的。
+
+##### 5.5.7 日期时间类型在开发中的应用
+
+开发中，用得最多的日期时间类型，就是datetime。此外，一般存注册时间，商品发布时间等，不建议使用datetime存储，而是使用时间戳，原因是datetime虽然直观，但不便于计算。
+
+#### 5.6 文本字符串类型
 
 
 

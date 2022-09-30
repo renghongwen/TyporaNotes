@@ -82,11 +82,11 @@ MySQL在linux中
 
 #### 2.3 目录
 
-数据目录； /var/lib/mysql
+- 数据目录； /var/lib/mysql
 
-命令目录：/usr/bin ,   /usr/sbin
+- 命令目录：/usr/bin ,   /usr/sbin
 
-配置文件目录： /etc/my.cnf  ,   /usr/share/mysql-8.0(或 /usr/share/mysql)
+- 配置文件目录： /etc/my.cnf  ,   /usr/share/mysql-8.0(或 /usr/share/mysql)
 
 #### 2.4 MySQL下默认的库的说明
 
@@ -94,6 +94,59 @@ MySQL在linux中
 - information_schema：存储基础的表，视图，触发器，列，索引等信息
 - performance_schema：保存MySQL运行过程中一些状态信息，用来监控M]ySQL服务的各类性能指标
 - sys：通过视图的方式把information_schema和performance_schema结合起来
+
+
+
+> /var/lib/mysql/ibtmp1 中存储系统表空间,可以存储表数据，默认大小为12M
+
+解析ibd文件命令
+
+```
+ibd2sdi --dump-file=新文件名.txt  要解析的ibd文件名
+```
+
+### 三.用户与权限管理
+
+#### 3.1 用户管理
+
+##### 3.1.1 创建用户
+
+```
+create user 用户名 identified by 密码;
+```
+
+##### 3.1.2 修改用户
+
+```
+update mysql.user set  ...  where user = ,host = ;
+flush privileges;
+```
+
+##### 3.1.3 删除用户
+
+方式一:（推荐使用）
+
+```
+drop user 用户名@host名;
+```
+
+方式二:
+
+```
+delete from mysql.user where host = and use = ;
+```
+
+> 该方式不推荐使用，因为可能系统会有残余信息保留，而drop user 则会删除用户信息及对应的权限信息
+
+
+
+
+
+
+
+
+
+
 
 
 

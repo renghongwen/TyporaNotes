@@ -781,7 +781,7 @@ timestamp类型也可以表示日期时间，格式也是YYYY-MM-DD HH:MM:SS ，
 
 ##### 5.6.1 char和varchar 
 
-- varchar(M)定义时，必须指定长度M，否则报错。
+- **varchar(M)定义时，必须指定长度M，否则报错。**
 
 - MySQL4.0版本以下，varchar(20),指的是20字节；MySQL5.0版本以上，varchar(20)，指的是20字符。
 

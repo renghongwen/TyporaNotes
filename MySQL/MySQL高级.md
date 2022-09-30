@@ -118,7 +118,7 @@ create user 用户名 identified by 密码;
 ##### 3.1.2 修改用户
 
 ```
-update mysql.user set  ...  where user = ,host = ;
+update mysql.user set  ...  where user = ?,host = ?;
 flush privileges;
 ```
 
@@ -133,11 +133,73 @@ drop user 用户名@host名;
 方式二:
 
 ```
-delete from mysql.user where host = and use = ;
+delete from mysql.user where host = ? and use = ?;
 ```
 
 > 该方式不推荐使用，因为可能系统会有残余信息保留，而drop user 则会删除用户信息及对应的权限信息
 
+##### 3.1.4 设置当前用户密码
+
+方式一：使用alter user 对当前用户密码进行修改
+
+```
+alter user user() identified by '新密码';
+```
+
+方式二:
+
+```
+set password = '新密码';
+```
+
+当然了，在MySQL5.7当中可以这样操作（不过不建议这样使用，在MySQL8.0中PASSWORD函数被删除了）
+
+```
+set password = PASSWORD('新密码');
+```
+
+##### 3.1.5 修改其他用户密码
+
+在root账号中对其他用户的密码进行修改
+
+方式一:
+
+```
+alter user 用户名@host名 identified by '新密码';
+```
+
+方式二:
+
+```
+set password for 用户名@host名='新密码';
+```
+
+方式三：(不推荐使用)
+
+```
+update mysql.user set authentication_string=PASSWORD('新密码') where user=? and host=?;
+```
+
+#### 3.2 权限管理
+
+查看权限列表:
+
+```
+show grant
+show privileges;
+```
+
+##### 3.2.1 授予权限
+
+```
+grant 权限1,权限2，... ,权限n on 数据库名.表名 to 用户名@host名 [identified by ‘密码’];
+```
+
+赋予所有的权限的命令:
+
+```
+grant all privileges on *.* to 用户名@host名;
+```
 
 
 
@@ -153,6 +215,7 @@ delete from mysql.user where host = and use = ;
 
 
 
+ 
 
 
 

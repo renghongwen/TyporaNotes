@@ -309,9 +309,9 @@ MySQL中聚合函数是不能嵌套使用的
 
 > 统计表中的记录数，使用count(*),count(1),count(具体字段)哪个效率比较高?	
 
-​	如果使用的是InnoDB存储引擎，则三者效率为count(*)  = count(1) > count(字段)
+​	如果使用的是InnoDB存储引擎，则三者效率为  count(*)  = count(1) > count(字段)
 
-
+**count(*)会统计值为null的行，而count(字段)则不会统计值为null的行**
 
 ###### 2.group by的使用
 

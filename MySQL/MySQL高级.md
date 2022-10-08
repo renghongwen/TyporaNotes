@@ -200,15 +200,90 @@ grant 权限1,权限2，... ,权限n on 数据库名.表名 to 用户名@host名
 grant all privileges on *.* to 用户名@host名;
 ```
 
+##### 3.2.2 回收权限
 
+```sql
+revoke 权限1,权限2, ... ,权限n on 数据库名.表名 from 用户名@host名；
+```
 
+##### 3.2.3 权限表
 
+在MySQL中，用户的权限信息存储在user，db，tables_priv，columns_priv，procs_priv等数据表中，当MySQL启动时，MySQL服务器会将这些表中的权限信息加载内存当中。
 
+#### 3.3 用户管理
 
+在MySQL8.0中，新添加了用户管理功能，用来管理具有相同权限的用户，角色是权限的集合。
 
+##### 3.3.1 新建角色
 
+```sql
+create role 'role名'@'host名';
+```
 
+##### 3.3.2 给角色赋予权限
 
+```sql
+grant select,delete ... on 库名.表名 to '角色名‘
+```
+
+##### 3.3.3 回收角色
+
+```sql
+drop role '角色名';
+```
+
+##### 3.3.4 给用户赋予角色
+
+给用户赋予角色后，角色还不起作用。要在角色已经创建并授权后，并且激活了用户的角色，用户的角色才能起作用
+
+```sql
+grant '角色名' to '用户名';
+```
+
+##### 3.3.5 查看当前用户的角色
+
+```sql
+select current_role;  //命令不正确,需要更正
+```
+
+##### 3.3.6 激活用户角色
+
+方式一:
+
+```sql
+set default role '角色名' to '用户名';
+```
+
+方式二:将activate_all_roles_on_login设置为ON
+
+```sql
+show variables like 'activate_all_roles_on_login';
+set global activate_all_roles_on_login = ON;
+```
+
+#####  3.3.7 回收角色
+
+```sql
+revoke role from '用户名'；
+```
+
+### 四.逻辑架构
+
+#### 4.1 逻辑架构
+
+![image-20221008155413280](.\图片\image-20221008155413280.png)
+
+![image-20221008162458389](E:\TyporaNotes\MySQL\图片\image-20221008162458389.png)
+
+MySQL的逻辑架构分为三层，分别为连接层，服务层，引擎层。而l连接层中包括TCP连接池和线程池，服务层又包括SQL接口，解析器，优化器，缓存和缓冲池。
+
+其中，SQL接口的作用是接收用户的SQL命令，并且返回用户需要查询的结果。
+
+> MySQL服务器中有专门的TCP连接池限制连接数，采用长连接模式复用TCP连接。
+
+#### 4.2 SQL执行流程
+
+![image-20221008170824805](.\图片\image-20221008170824805.png)
 
 
 

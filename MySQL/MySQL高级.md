@@ -185,8 +185,7 @@ update mysql.user set authentication_string=PASSWORD('新密码') where user=? a
 查看权限列表:
 
 ```
-show grant
-show privileges;
+show grants;
 ```
 
 ##### 3.2.1 授予权限

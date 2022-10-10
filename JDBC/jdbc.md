@@ -148,7 +148,8 @@ set global transaction isolation level read committed;
 - 最大连接数
 - 最小连接数
 - 获取连接时最大等待时间
-- 
+- 最小空闲连接数
+- 最大空闲连接数
 
 
 

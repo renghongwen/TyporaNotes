@@ -315,7 +315,7 @@ MySQL中聚合函数是不能嵌套使用的
 
 ###### 2.group by的使用
 
-- 在使用过程中，需要注意，SELECT中出现的非组函数的字段必须声明在group by中。反之，group by中声明的子弹可以不出现在SELECT中。
+- 在使用过程中，需要注意，SELECT中出现的非组函数的字段必须声明在group by中。反之，group by中声明的字段可以不出现在SELECT中。
 - SELECT ... FROM ... WHERE ... GROUP BY ... ORDER BY ... LIMIT ...
 - MySQL中GROUP BY 中使用WITH ROLLUP  即 GROUP BY ... WITH  ROLLUP
 - 当使用ROLLUP时，不能同时使用ORDER BY子句进行结果排序，即ROLLUP和ORDER BY是相互排斥的。

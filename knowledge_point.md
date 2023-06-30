@@ -43,6 +43,8 @@ Json序列化和实现Serializable接口序列化的区别:
 
 产生原因:
 
+网上具体原因分析帖：https://www.jb51.net/article/232584.htm 
+
 > private Random rand = SecureRandom.getInstanceStrong()；
 >
 > rand.nextDouble() 和rand.nextInt()等同类方法在Linux机器上获取时会读取操作系统的/dev/random文件来生成随机数。
@@ -55,7 +57,6 @@ Json序列化和实现Serializable接口序列化的区别:
 
 - 采用 new SecureRandom() 实例化，这个实例化底层是读取的是操作系统的 /dev/urandom文件，这个是伪随机，相比 SecureRandom.getInstanceStrong() 方式，它的随机性稍微弱一些，但大多数场景够用了。 (实现起来比较好的方式)
 - 仍然采用 SecureRandom.getInstanceStrong() 方式，这种方式适合对随机性要求高的场景。采用这种方式为了避免阻塞问题，就需要系统产生足够的扰动。于是可以安装 haveged 并启动 haveged，启动haveged后可以发现 cat /proc/sys/kernel/random/entropy_avail 返回的值变大了，所以不再阻塞。也可以安装rng-tools这个来达到这个目的
-  
 - 直接使用静态成员变量private static Random random  = new Random；(比较不好的方式)
 
 ### 5. 关于BigDecimal的一些使用建议
@@ -77,6 +78,55 @@ Json序列化和实现Serializable接口序列化的区别:
 > 根据数据结果展示格式不同，采用不同的字符串输出方式，通常使用比较多的方法是toPlainString()
 >
 > toString()方法在必要时会输出科学计数法
+
+### 6. SectorEnum[] enumAry = SectorEnum.values();数组的顺序是怎么样的?
+
+按照枚举类中定义的顺序
+
+### 7.过滤器和拦截器
+
+- 过滤器可以拦截一切请求包括html,css,js等，而拦截器只可以拦截controller中的请求
+- 过滤器底层是使用回调函数实现的，而拦截器则是使用动态代理和反射实现的
+- 过滤器依赖于tomcat,而拦截器是spring中的，application等也可以使用
+- ![image-20221205165612500](.\图片\image-20221205165612500.png)
+
+### 8.JDK动态代理和CGLib动态代理
+
+![image-20221205165900934](.\图片\image-20221205165900934.png)
+
+
+
+### 9.linux中rz命令和xftp
+
+- rz命令通常用于传输小文件，而xftp用于传输大文件
+
+- rz命令不能上传文件夹，而sftp可以
+
+- rz命令必须支持ZModem协议
+
+### 10.数据库语句
+
+> insert into ... on duplicate key update ... values() 
+>
+> 作用：primary key 或 unique 索引出现重复,执行更新操作;若不重复，则执行插入操作
+>
+> **该语句可以指定替换某一列的值**
+>
+> 该语句需要特别注意的地方：
+>
+> 发生冲突时，执行更新操作，但仍然会占用自增id值
+
+replace insert into 
+
+### 11.工厂模式
+
+使用简单工厂模式还是抽象工厂模式取决于产品等级结构是否单一；
+
+简单工厂模式适用于单一的产品等级的商品；抽象工厂模式适用于产品族的商品
+
+简单工厂模式虽然可以解决开闭原则问题，但还是会有单一职责的问题；
+
+抽象工厂模式则将上述问题都给解决了。
 
 
 

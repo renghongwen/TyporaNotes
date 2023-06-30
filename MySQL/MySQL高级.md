@@ -333,7 +333,7 @@ show profiles;
 查询指定的执行计划:
 
 ```sql
-show profiles for query 执行计划的id值;
+show profile for query 执行计划的id值;
 ```
 
 ##### 4.2.2 数据库缓冲池
@@ -388,7 +388,7 @@ show variables like '%storage_engines%';
 set default_storage_engine = 存储引擎名; 
 ```
 
-#### 5.1 InnoDB存储引擎：具有外键支持的事务性存储引擎
+#### 5.1 InnoDB存储引擎：具有外键支持的事务型存储引擎
 
 - 除了增加和查询外，还需要更新，删除操作，优先选择使用InnoDB存储引擎
 - InnoDB存储引擎是为处理巨大数据量的最大性能设计
@@ -561,7 +561,133 @@ compact和redundant行格式对于行溢出的处理是将溢出的行存放到�
 
 10. 使用频繁的列放到联合索引的左侧
 
-11. 
+11. 在多个字段都要创建索引的情况下，联合索引优于单值索引
+> 建议 单张表中，不超过6个索引
+
+#### 8.3 不适合创建索引的7种情况
+
+1. where中使用不到的字段，不要建立索引
+2. 数据量小 （数据量小于1000）的表最好不要建立索引
+3. 大量重复数据的字段上不要建立索引  （重复度高于10%就不对该字段建立索引）
+4. 避免对经常更新的表创建过多的索引
+5. 不建议对无序的字段作为索引
+6. 删除不再使用或很少使用的索引
+7. 不定义冗余或重复索引（联合索引和普通索引通常容易冗余，需要注意）
+
+### 九.性能分析及性能分析工具的使用
+
+查看慢查询次数:
+
+```sql
+show status like 'Slow_queries';
+```
+
+开启慢查询:(默认情况下，mysql是不开启慢查询日志的)
+
+> //查询是否开启慢查询日志
+>
+> show variables like '%slow_query_log%';
+>
+> set global slow_query_log = ON;
+>
+> //查询慢查询的最大查询时间
+>
+> show variable like 'long_query_time';
+>
+> set global long_query_time = ;
+>
+> set  long_query_time = ;
+
+使用**mysqldumpslow 命令**可以查询慢查询日志文件中的信息
+
+例如:
+
+```
+mysqldumpslow -s t -t 20 日志文件地址
+```
+
+上面命令表名查询的出的慢日志按照查询时间进行排列且只列出前面20条记录
+
+可以使用
+
+```
+mysqladmin -uroot -p flush-logs slow 
+```
+
+命令对慢查询日志进行删除重建
+
+**使用expalin对sql语句进行分析时,**
+
+- type字段的类型有system,const,ref,eq_ref,unique_subquery,indx_merge,range
+- partitions字段用于记录查询记录所在分区信息
+- key_len可以用于判断联合索引的效率
+
+> **索引下推**：在索引遍历过程中，对索引中包含的字段先进行判断，直接过滤掉不满足条件的记录，减少回表次数提高查询效率。
+>
+> 如果使用explain对sql语句进行分析时,extra字段中显示Using index condition 则表明使用了索引下推
+
+查看是否开启索引下推的命令:
+
+```
+show variables like 'optimizer_switch';
+```
+
+开启索引下推的命令:
+
+```
+set optimizer_switch = 'index_condition_pushdown = ON'
+```
+
+> 知识补充：
+>
+> select ...  from ... order by ...  limit 10 表示只显示前面10条数据
+
+
+
+explain的四种输出格式:
+
+- 传统格式
+- json格式
+- tree格式
+- 可视化格式
+
+输出json格式的命令:
+
+```
+explain format=json  ......
+```
+
+json格式的输出相比于传统格式的输出，它会多一个属性：成本。这个属性可以更好地帮助我们了解sql执行的开销。
+
+> 在explain命令之后，可以输入show warnings查看优化器重写后的sql语句 （注意：show warnings 是另外的单条语句）
+
+
+
+#### 分析优化器执行计划：trace 
+
+OPTIMIZER_TRACE：它可以个跟踪优化器做出的各种决策(访问表的方法，开销计算)，将跟踪结果记录到information_schema库的OPTIMIZER_TRACE表中
+
+该功能默认关闭，需要开启trace,并设置格式为json,同时设置trace最大能够使用的内存大小
+
+```
+set optimizer_trace='enabled=on',end_markers_in_json=on;
+set optimizer_trace_max_mem_size=1000000
+```
+
+#### MySQL 监控分析视图 sys schema 
+
+```sql
+-- 查看是否有冗余的索引
+select * from sys.schema_redundant_indexes;
+-- 查看是否有未使用的索引
+select * from sys.schema_unused_indexes;
+-- 查看行锁的阻塞情况
+select * from sys.innodb_lock_waits;
+```
+
+
+
+### 十.索引优化与查询优化
 
 
 
@@ -589,7 +715,7 @@ compact和redundant行格式对于行溢出的处理是将溢出的行存放到�
 
 
 
-
+​       
 
 
 

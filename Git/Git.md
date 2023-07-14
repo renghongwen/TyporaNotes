@@ -64,7 +64,9 @@ CVS，SVN：集中式版本控制工具
 | git pull 别名 分支           | 拉取远程库到本地库         |
 | git clone 远程地址           | 克隆远程仓库到本地         |
 
-#### 4
+
+
+#### 4.IDEA中颜色的含义
 
 红色：未加入暂存区
 
@@ -115,8 +117,10 @@ git checkout : 切换分支
   mixed模式：是只将工作区的代码进行回滚
 
   soft模式：是将暂存区的代码进行回滚
+  
+  
 
-  ####  5.git merge 和 git rebase的区别
+####  5.git merge 和 git rebase的区别
 
 ​			git merge：采用的是三元合并的方式，该方式可以减少一些手动解决冲突的情况。
 
@@ -153,8 +157,12 @@ git cherry-pick 将少数几个commit合并到其他分支上 （功能类似于
 发送冲突后，可以进行三种操作
 
 - 解决冲突： git add      ,     git cherry-pick --continue
+
 - 回滚：git cherry-pick --abort
+
 - 中断：git cherry-pick --quit
+
+
 
 #### 7. git stash
 
@@ -208,7 +216,22 @@ git stash 的两种使用场景：
 
 
 
-  
+#### 8.git diff A ... B 和 git diff A .. B 的区别
+
+**git diff 基础命令:**
+
+git diff  ：比较的是工作区和暂存区所有文件的区别
+git diff 某个版本 ：比较的是工作区和该版本所有文件的区别
+
+> git diff A分支 ... B分支 ：比较的是A,B分支共同父节点和B分支最新节点的区别
+>
+> git diff A 分支 .. B分支： 比较的是A,B分支共同父节点后面的所有节点提交的文件的区别
+
+![image-20230714100942094](E:\TyporaNotes\Git\照片\image-20230714100942094.png)
+
+
+
+#### 9. git log A ... B 和 git log A .. B 的区别
 
 
 
@@ -229,12 +252,6 @@ git stash 的两种使用场景：
 
 
 
-
-
-
-
-
-#### git diff 提交范围中 没点，两点，三点的区别
 
 
 

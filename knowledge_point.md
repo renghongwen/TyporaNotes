@@ -1,3 +1,7 @@
+
+
+
+
 ## 知识杂记
 
 ### 1. @RequestMapping中produces属性
@@ -131,6 +135,60 @@ replace insert into
 ### 12.断言
 
 断言抛出的是一个错误，不可以用try{}catch{}进行捕捉。
+
+### 13. 索引优化示例
+
+select * from order where order_state = 4 order by add_time asc limit 10;
+
+表中创建了idx_order_state和idx_add_time两个索引
+
+如果使用上面的sql的话,mysql会走idx_add_time索引，对idx_add_time索引树进行扫描，判断回表判断order_state是否是4,按需取出10条数据，这样比较慢
+
+- 方式一:
+
+```
+修改后sql:
+
+select * from order where order_state = 4 order by add_time+0 asc limit 10;
+
+这样add_time改成表达式了，mysql就不会走add_time索引，而是走order_state索引，先筛选出order_state为4的，在进行排序
+```
+
+- 方式二:
+
+```
+也可以改写成
+
+select *  from order  force index(idx_order_state) where order_state = 4 order by add_time asc limit 10;
+
+不过不建议使用这种形式，这样跳过了mysql的优化器，就不会走更优的索引了。
+```
+
+- 方式三：
+
+```
+建立order_state和add_time的联合索引
+```
+
+###  14.游标式分页
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -170,7 +170,15 @@ select *  from order  force index(idx_order_state) where order_state = 4 order b
 建立order_state和add_time的联合索引
 ```
 
-###  14.游标式分页
+###  14.查看linux机器日志命令
+
+不要使用cat ,vim命令，cat,vim 命令会将日志全部加载到内容当中，
+
+最好使用tail 和 less
+
+
+
+
 
 
 

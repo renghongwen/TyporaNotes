@@ -1424,8 +1424,13 @@ redo log在事务执行过程中会不断写入，而bin log 则是只有事务�
 补充知识:
 
 ```
-在使用虚拟机克隆时，需要对克隆出来的机器修改一下配置：1.mac地址 2.hostname 3.ip地址 4.机器uuid 5.mysql server uuid
+在使用虚拟机克隆时，需要对克隆出来的机器修改一下配置：1.mac地址 （修改虚拟机中的mac地址信息）2.hostname 3.ip地址 4.机器uuid 5.mysql server uuid （修改 /var/lib/mysql/auto.cnf文件内容）
+两台虚拟机上述配置不能一样，需要重新生成或者进行修改
 ```
+
+
+
+
 
 
 

@@ -87,11 +87,13 @@ Json序列化和实现Serializable接口序列化的区别:
 
 按照枚举类中定义的顺序
 
-### 7.过滤器和拦截器
+### 7.过滤器，拦截器，切面
 
 - 过滤器可以拦截一切请求包括html,css,js等，而拦截器只可以拦截controller中的请求
 - 过滤器底层是使用回调函数实现的，而拦截器则是使用动态代理和反射实现的
 - 过滤器依赖于tomcat,而拦截器是spring中的，application等也可以使用
+- 过滤器和拦截器需要从request中获取参数,而切面通过ponit.getArgs直接获取
+- 拦截器作用于请求前，过滤器作用于请求前后，而切面可以在对方法前后，异常，环绕等做处理
 - ![image-20221205165612500](.\图片\image-20221205165612500.png)
 
 ### 8.JDK动态代理和CGLib动态代理
@@ -176,7 +178,17 @@ select *  from order  force index(idx_order_state) where order_state = 4 order b
 
 最好使用tail 和 less
 
+### 15.FileUtils.copyInputStreamToFile(uploadFile.getInputStream(), file);
 
+```
+file文件的名称不能太长。
+linux系统中，文件名称不能超过255字符
+一个中文占用3个字符，故文件名中最多87中文
+```
+
+
+
+### 16.
 
 
 

@@ -4,7 +4,7 @@
 
 #### 1. MySQL的卸载步骤
 
-1. 关闭MySQL服务
+1.  关闭MySQL服务
    - systemctl stop mysqld.service
 2. 查看Linux上是否有MySQL的安装包
    - rpm -qa | grep -i mysql
@@ -1405,7 +1405,7 @@ redo log在事务执行过程中会不断写入，而bin log 则是只有事务�
 
 #### 十八.主从复制
 
-主从复制的作用:
+主从复制的作用: 
 
 - 读写分离
 - 数据备份：相当于是热备份机制
@@ -1427,6 +1427,51 @@ redo log在事务执行过程中会不断写入，而bin log 则是只有事务�
 在使用虚拟机克隆时，需要对克隆出来的机器修改一下配置：1.mac地址 （修改虚拟机中的mac地址信息）2.hostname 3.ip地址 4.机器uuid 5.mysql server uuid （修改 /var/lib/mysql/auto.cnf文件内容）
 两台虚拟机上述配置不能一样，需要重新生成或者进行修改
 ```
+
+主从复制配置文件my.cnf中binlog格式
+
+- statement模式(默认):每一条修改的sql语句都会记录到binlog中
+- row模式：不记录每条sql语句的上下文信息，仅记录哪条数据进行了什么修改
+- mined模式：statement和row模式的结合
+
+
+
+**主从复制下的同步数据一致性问题**
+
+解决方案：
+
+- 异步复制：效率高，但一致性较差
+- 半同步复制：等待从库返回通知，再返回写结果
+- 组复制：
+
+
+
+#### 十九.数据库备份与恢复
+
+备份：
+
+- 物理备份：备份数据文件(idb文件)，mysql中可以使用xtrabackup进行备份
+- 逻辑备份：备份sql语句，mysql中常用的备份工具是mysqldump
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
